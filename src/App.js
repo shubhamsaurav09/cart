@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+let toppings = ["Peperoni", "Mushroom", "Paneer", "Jalapeno", "Mozarella"];
+
+export default function App() {
+  const [cart, setCart] = useState([]);
+
+  const updateToppings = ({ target }) => {
+    const selectedTopping = target.value;
+    setCart((prev) => [selectedTopping, ...prev]);
+    toppings = toppings.filter((elem) => elem !== selectedTopping);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Select Toppings</h1>
+      {toppings.map((items) => {
+        return (
+          <button value={items} onClick={updateToppings}>
+            {items}
+          </button>
+        );
+      })}
+      <h2>Updated Cart</h2>
+      <p>Your selected cart has the following items:</p>
+      <ul>
+        {cart.map((item) => {
+          return <li>{item}</li>;
+        })}
+      </ul>
     </div>
   );
 }
-
-export default App;
